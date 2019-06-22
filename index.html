@@ -9,27 +9,26 @@
 </head>
 
 <body>
-  <script src="https://aframe.io/releases/0.7.1/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-  <script src="https://unpkg.com/aframe-html-shader@0.2.0/dist/aframe-html-shader.min.js"></script>
-
-  <!-- テクスチャの中身を描画する要素。 -->
-  <div id="target">
-    <div class="item-image"><img src="./image/tiger_detail.jpg" /></div>
-    <div class="item-marquee">ブラウザでARが動く</div>
-  </div>
-
+  
   <!-- AR コンテンツの定義。 -->
   <a-scene embedded arjs="debugUIEnabled:false" vr-mode-ui="enabled:false">
-    <a-marker preset="custom" type="pattern" url="pattern-tiger.patt">
-      <a-box position="0 0.6 0"></a-box>
-
-      <a-plane position="0 0.6 0.51" width="1.0" height="1.0" material="shader:html;target:#target;fps:24;width:640;height:640"></a-plane>
+    <a-assets>
+        <!-- 表示する画像 -->
+        <img id="wao" src="./image/tiger_detail.jpg" >
+    </a-assets>
+    <a-marker preset="custom" type="pattern" url="./image/pattern-tiger.patt">
+     <!-- 赤い立方体を表示 -->
+        <a-entity>
+            <!-- idで画像を指定。x軸回りで-90度回転 -->
+            <a-image src="#wao" width="2" height="2" rotation="-90 0 0"></a-image>
+            <!--y軸周りで360度回転するアニメーション -->
+            <!-- 間隔:4000(ms), repeat(繰り返し)-->
+            <a-animation attribute="rotation" to="0 360 0" dur="4000" repeat="indefinite" easing="linear"></a-animation>
+        </a-entity>
     </a-marker>
 
     <a-entity camera></a-entity>
   </a-scene>
-
-  <script src="./index.js"></script>
 </body>
